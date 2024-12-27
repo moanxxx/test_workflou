@@ -2,8 +2,8 @@ name: Daily Backup
 
 on:
   schedule:
-    - cron: '00 00 * * *' # Запуск каждый день в 11:35
-  workflow_dispatch: # Добавлено для ручного запуска
+    - cron: '00 00 * * *'
+  workflow_dispatch:
 
 jobs:
   backup:
@@ -22,7 +22,7 @@ jobs:
         env:
           TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
         run: |
-          git remote add backup https://github.com/moanxxx/test_workflou.git
-          git fetch backup
+          git remote add backup https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/moanxxx/test_workflou.git
+          git fetch backup || true
           git branch -M main
           git push -u backup main
