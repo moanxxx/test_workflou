@@ -21,10 +21,18 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Add remote and push to target repository
+      - name: Check and create initial commit if empty
+        run: |
+          if [ -z "$(git rev-parse --branches)" ]; then
+            echo "Creating initial commit"
+            echo "Initial commit" > README.md
+            git add README.md
+            git commit -m "Initial commit"
+          fi
+
+      - name: Push to target repository
         env:
           TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
         run: |
           git remote add backup https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/moanxxx/test_workflou.git
-          git fetch backup || true
           git push -u backup main
