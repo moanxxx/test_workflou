@@ -3,7 +3,7 @@ name: Backup Repository
 on:
   push:
     branches:
-      - master
+      - main
   schedule:
     - cron: '0 0 * * *'
   workflow_dispatch:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Ensure branch and commit exist
         run: |
-          if [ -z "$(git rev-parse --branches)" ]; then
+          if [ -z "$(git rev-parse HEAD)" ]; then
             echo "Creating initial commit"
             echo "Initial commit" > README.md
             git add README.md
@@ -36,4 +36,5 @@ jobs:
           TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
         run: |
           git remote add backup https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/moanxxx/test_workflou11.git
-          git push -u backup master
+          git push -u backup main
+
