@@ -1,0 +1,27 @@
+name: Daily Backup
+
+on:
+  schedule:
+    - cron: '35 11 * * *' # Запуск каждый день в 11:35
+  workflow_dispatch: # Добавлено для ручного запуска
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Push to target repository
+        env:
+          TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
+        run: |
+          git remote add backup https://github.com/<username>/<target-repository>.git
+          git fetch backup
+          git push -u backup main
