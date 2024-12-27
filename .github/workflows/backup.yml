@@ -20,7 +20,17 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Ensure branch and commit exist
+        run: |
+          if [ -z "$(git rev-parse --branches)" ]; then
+            echo "Creating initial commit"
+            echo "Initial commit" > README.md
+            git add README.md
+            git commit -m "Initial commit"
+          fi
+          git branch -M main
 
+      
       - name: Push to target repository
         env:
           TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
