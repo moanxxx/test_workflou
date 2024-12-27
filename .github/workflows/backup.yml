@@ -36,4 +36,4 @@ jobs:
           TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
         run: |
           git remote add backup https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/moanxxx/test_workflou.git
-          git push -u backup main
+          git push -u backup master
