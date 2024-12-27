@@ -28,12 +28,12 @@ jobs:
             git add README.md
             git commit -m "Initial commit"
           fi
-          git branch -M main
+          git branch -M master
 
       
       - name: Push to target repository
         env:
           TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
         run: |
-          git remote add backup https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/moanxxx/test_workflou.git
+          git remote add backup https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/moanxxx/test_workflou11.git
           git push -u backup master
