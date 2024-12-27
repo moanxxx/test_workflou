@@ -1,12 +1,9 @@
-name: Daily and On-Demand Backup
+name: Backup Repository
 
 on:
   schedule:
-    - cron: '35 11 * * *' # Scheduled daily backup
-  push:
-    branches:
-      - main          # Trigger on push to main branch
-  workflow_dispatch:  # Manual trigger
+    - cron: '0 0 * * *' # Ежедневный запуск
+  workflow_dispatch:     # Ручной запуск
 
 jobs:
   backup:
@@ -21,7 +18,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Check and create initial commit if empty
+      - name: Ensure branch and commit exist
         run: |
           if [ -z "$(git rev-parse --branches)" ]; then
             echo "Creating initial commit"
@@ -29,6 +26,7 @@ jobs:
             git add README.md
             git commit -m "Initial commit"
           fi
+          git branch -M main
 
       - name: Push to target repository
         env:
