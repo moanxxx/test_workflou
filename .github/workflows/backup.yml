@@ -27,5 +27,4 @@ jobs:
         run: |
           git remote add backup https://${{ secrets.TARGET_REPO_TOKEN }}@github.com/moanxxx/test_workflou.git
           git fetch backup || true
-          git branch -M main
           git push -u backup main
