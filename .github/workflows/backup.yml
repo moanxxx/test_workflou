@@ -1,9 +1,12 @@
-name: Daily Backup
+name: Daily and On-Demand Backup
 
 on:
   schedule:
-    - cron: '35 11 * * *'
-  workflow_dispatch:
+    - cron: '35 11 * * *' # Scheduled daily backup
+  push:
+    branches:
+      - main          # Trigger on push to main branch
+  workflow_dispatch:  # Manual trigger
 
 jobs:
   backup:
@@ -18,7 +21,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Push to target repository
+      - name: Add remote and push to target repository
         env:
           TARGET_REPO_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
         run: |
