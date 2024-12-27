@@ -17,4 +17,4 @@ if __name__ == "__main__":
     print("Бот запущен и готов к работе.")
     bot.infinity_polling()
 
-    #for commit
+    #for commit1
